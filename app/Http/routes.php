@@ -26,3 +26,8 @@ Route::post ( '/sections/create', 'SectionController@create' );
 
 Route::get('/subsection/index/{section_id}', 'SubSectionController@index');
 Route::post ( '/subsections/create', 'SubSectionController@create' );
+/*
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
+*/
