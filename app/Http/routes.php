@@ -36,6 +36,8 @@ Route::get('/bills/bill', 'BillsController@createBill');
 
 Route::post('/bills/create', 'BillsController@create');
 
+Route::get('/bills/print/{bill_id}', 'BillsController@printBill');
+
 /*
 Route::auth();
 

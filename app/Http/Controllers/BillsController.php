@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use DB;
+use App\Bills;
+use App\Sub_bills;
 
 
 class BillsController extends Controller
@@ -70,26 +72,50 @@ class BillsController extends Controller
         $ids=session('bills');
         $sections = DB::table('sections')->whereIn('id', $ids)->get();
 
+        $bill = Bills::create (['customer_name' => $request ['customer_name']]);
+
+        $bill_id = $bill->id;
         foreach($sections as $section){
-            echo $request ["color$section->id"];
+            $color =  $request ["color$section->id"];
+            $weight =  $request ["weight$section->id"];
+            $price =  $request ["price$section->id"];
+            $total_price =  $weight * $price ;
+
+            Sub_bills::create (['color' => $color , 
+                                'weight' =>$weight ,
+                                'price'=>$price ,
+                                'total_price'=>$total_price ,
+                                'section_id'=>$section->id,
+                                'bill_id'=>$bill->id
+                                ]);
         }
 
-/*        $section_id = $request ['section_id'];
-		$subsection = SubSection::create ( [ 
-                'section_id'=>$section_id,
-				'num' => $request ['num'],
-				'name' => $request ['name'],
-				'quantity' => $request ['quantity']
-		] );
-		        
-        session()->flash('message', 'تم أضافة الجزء بنجاح');
-        session()->flash('type', 'success');
-
-		return redirect ( "/subsection/index/$section_id" ); // got to add sub section
-*/
-
-//return view('section.create');
+	        
+        
+        return redirect ( "/bills/print/$bill_id" ); 
+        
 	}
 
+    public function printBill($bill_id)
+    {
+
+        $bill = DB::table('bills')->where('id',$bill_id )->first();
+        $sub_bills = DB::table('sub_bills')->where('sub_bills.bill_id',$bill_id )->
+        join('sections', 'sections.id', '=', 'sub_bills.section_id')->get();
+
+        $total_price = 0 ;
+        foreach ( $sub_bills as $sub){
+            $total_price = $total_price + $sub->total_price ;
+        }
+/*        DB::table('friends')->where('friends.user_id','1')
+    ->join('votes', 'votes.user_id', '=', 'friends.friend_id');
+*/
+        return view('bills.bill_print',[
+            'bill' => $bill,
+            'sub_bills' => $sub_bills,
+            'total'=>$total_price 
+            ]);
+
+    }
 
 }

@@ -58,7 +58,7 @@
                
               <div class="form-group">
                    <label for="exampleInputEmail1">اسم العميل</label>
-                  <input type="text" name="customer"  class="form-control"  placeholder="اسم العميل  " required>
+                  <input type="text" name="customer_name"  class="form-control"  placeholder="اسم العميل  " required>
                 </div>
 
                 <div class="form-group">
