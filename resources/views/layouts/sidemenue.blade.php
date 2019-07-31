@@ -31,7 +31,14 @@
             
           </a>
         </li>
+        <li>
+          <a href="{{ url('/bills') }}">
+            <i class="fa fa-calendar"></i> <span>انشاء فاتورة</span>
+            
+          </a>
+        </li>
 
+        
 
        
          

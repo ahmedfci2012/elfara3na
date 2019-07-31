@@ -25,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        
         $sections = DB::table('sections')->get();
         return view('home' , ['sections' => $sections]);
     }

@@ -26,6 +26,16 @@ Route::post ( '/sections/create', 'SectionController@create' );
 
 Route::get('/subsection/index/{section_id}', 'SubSectionController@index');
 Route::post ( '/subsections/create', 'SubSectionController@create' );
+
+
+Route::get('/bills','BillsController@index');
+
+Route::get('/bills/add/{section_id}', 'BillsController@addSectionToBill');
+
+Route::get('/bills/bill', 'BillsController@createBill');
+
+Route::post('/bills/create', 'BillsController@create');
+
 /*
 Route::auth();
 
